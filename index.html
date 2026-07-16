@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUNE — Cosmetics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black: #0b0b0c;
+    --charcoal: #191513;
+    --red: #9e1b1b;
+    --red-bright: #c8352f;
+    --gold: #e8b930;
+    --gold-dim: #a5822a;
+    --cream: #f1e9dc;
+    --cream-dim: #cabfae;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3, .display{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 22px 5%;
+    background: linear-gradient(180deg, rgba(11,11,12,0.95), rgba(11,11,12,0));
+    backdrop-filter: blur(2px);
+  }
+  .logo-mark{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    letter-spacing: 7px;
+    font-weight: 700;
+  }
+  .logo-mark .logo-text{
+    background: linear-gradient(135deg, #fbe9c2 0%, var(--gold) 45%, var(--red-bright) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 12px rgba(232,185,48,0.25));
+  }
+  .logo-mark .logo-emblem{
+    width: 26px; height:26px;
+    flex-shrink:0;
+  }
+  footer .logo-mark{ justify-content:center; }
+  .nav-links{
+    display:flex;
+    gap: 36px;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .nav-links a{ opacity:0.8; transition: opacity .25s, color .25s; position:relative; }
+  .nav-links a:hover{ opacity:1; color: var(--gold); }
+
+  .admin-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background: rgba(232,185,48,0.08);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: all .25s;
+  }
+  .admin-btn:hover{ background: rgba(232,185,48,0.18); box-shadow: 0 0 18px rgba(232,185,48,0.25); }
+  .admin-btn.unlocked{ background: rgba(158,27,27,0.15); border-color: var(--red-bright); color: #ff8b83; }
+  .admin-btn svg{ width:14px; height:14px; }
+
+  .cart-btn{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(241,233,220,0.25);
+    background: rgba(255,255,255,0.03);
+    color: var(--cream);
+    cursor:pointer;
+    transition: all .25s;
+  }
+  .cart-btn:hover{ border-color: var(--gold); color: var(--gold); }
+  .cart-btn svg{ width:17px; height:17px; }
+  .cart-badge{
+    position:absolute;
+    top:-6px; right:-6px;
+    background: var(--red-bright);
+    color:#fff;
+    font-size: 0.6rem;
+    font-weight:600;
+    min-width: 17px; height:17px;
+    border-radius: 999px;
+    display:flex; align-items:center; justify-content:center;
+    padding: 0 3px;
+  }
+  .nav-right{ display:flex; align-items:center; gap: 14px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 0 20px;
+    overflow:hidden;
+  }
+  .hero::before{
+    /* red ambient glow */
+    content:"";
+    position:absolute;
+    inset:-20%;
+    background: radial-gradient(circle at 50% 40%, rgba(158,27,27,0.35), transparent 55%),
+                radial-gradient(circle at 80% 80%, rgba(232,185,48,0.12), transparent 45%);
+    filter: blur(10px);
+    z-index:0;
+  }
+  .texture-svg{
+    position:absolute;
+    inset:0;
+    width:100%; height:100%;
+    z-index:1;
+    opacity:0.5;
+    mix-blend-mode: overlay;
+  }
+  .hero-content{ position:relative; z-index:2; }
+  .eyebrow{
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+    opacity: 0.9;
+  }
+  .hero h1{
+    font-size: clamp(4.5rem, 16vw, 11rem);
+    line-height: 0.85;
+    letter-spacing: 4px;
+    background: linear-gradient(180deg, #fbe9c2 0%, var(--gold) 45%, var(--gold-dim) 60%, var(--red-bright) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 40px rgba(158,27,27,0.35));
+  }
+  .hero p.tag{
+    margin-top: 22px;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    font-weight: 300;
+  }
+  .hero-cta{
+    margin-top: 44px;
+    display:inline-flex;
+    align-items:center;
+    gap: 12px;
+    padding: 16px 38px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    letter-spacing: 3px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all .3s;
+  }
+  .hero-cta:hover{ background: var(--gold); color: var(--black); box-shadow: 0 0 30px rgba(232,185,48,0.4); }
+
+  .scroll-cue{
+    position:absolute;
+    bottom: 34px;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity:0.6;
+  }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{ padding: 130px 6% ; position:relative; }
+  .section-head{
+    text-align:center;
+    margin-bottom: 70px;
+  }
+  .section-head .eyebrow{ margin-bottom: 14px; }
+  .section-head h2{
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    color: var(--cream);
+  }
+  .section-head .rule{
+    width: 60px; height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 22px auto 0;
+  }
+
+  /* ---------- PRODUCT GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 34px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .card{
+    background: linear-gradient(180deg, var(--charcoal), #100d0c);
+    border: 1px solid rgba(232,185,48,0.12);
+    border-radius: 4px;
+    overflow:hidden;
+    position:relative;
+    transition: transform .35s, box-shadow .35s, border-color .35s;
+  }
+  .card:hover{
+    transform: translateY(-6px);
+    border-color: rgba(232,185,48,0.4);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(158,27,27,0.15);
+  }
+  .card-photo{
+    position:relative;
+    width:100%;
+    aspect-ratio: 1 / 1;
+    background: #0f0d0c;
+    overflow:hidden;
+  }
+  .card-photo img{
+    width:100%; height:100%;
+    object-fit: cover;
+    display:block;
+    filter: saturate(0.95) contrast(1.05);
+    transition: transform .5s;
+  }
+  .card:hover .card-photo img{ transform: scale(1.06); }
+
+  .card-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(0deg, rgba(11,11,12,0.55), transparent 45%);
+  }
+
+  .card-body{ padding: 22px 22px 26px; position:relative; z-index:2; }
+  .card-name{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .card-desc{
+    font-size: 0.78rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+    min-height: 18px;
+  }
+  .card-price{
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .card-footer{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .add-btn{
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid rgba(241,233,220,0.3);
+    padding: 9px 16px;
+    border-radius: 2px;
+    cursor:pointer;
+    background:transparent;
+    transition: all .25s;
+  }
+  .add-btn:hover{ border-color: var(--red-bright); color: #ff8b83; }
+
+  /* ---------- ADMIN EDIT MODE ---------- */
+  .card.editing{ border-color: var(--red-bright); box-shadow: 0 0 0 1px rgba(200,53,47,0.5), 0 20px 40px rgba(0,0,0,0.5); }
+  .edit-tag{
+    position:absolute;
+    top:10px; left:10px;
+    z-index:5;
+    background: var(--red);
+    color:#fff;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform:uppercase;
+    padding: 4px 8px;
+    border-radius: 999px;
+    display:none;
+  }
+  .editing .edit-tag{ display:inline-block; }
+  .editing .card-name, .editing .card-desc, .editing .card-price{
+    outline: 1px dashed rgba(232,185,48,0.5);
+    outline-offset: 3px;
+    cursor: text;
+    border-radius:2px;
+  }
+  .editing .card-name:focus, .editing .card-desc:focus, .editing .card-price:focus{
+    outline: 1px solid var(--gold);
+    background: rgba(232,185,48,0.06);
+  }
+  .img-edit-overlay{
+    position:absolute; inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:8px;
+    background: rgba(11,11,12,0.72);
+    z-index:6;
+    padding: 16px;
+  }
+  .editing .img-edit-overlay{ display:flex; }
+  .img-edit-overlay input{
+    width:90%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--gold-dim);
+    color: var(--cream);
+    font-size: 0.7rem;
+    padding: 8px 10px;
+    border-radius: 2px;
+  }
+  .img-edit-overlay label{
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .remove-card-btn{
+    position:absolute;
+    top:10px; right:10px;
+    z-index:6;
+    display:none;
+    background: rgba(158,27,27,0.85);
+    color:#fff;
+    border:none;
+    width: 26px; height:26px;
+    border-radius: 50%;
+    cursor:pointer;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  .editing .remove-card-btn{ display:block; }
+
+  .like-btn{
+    position:absolute;
+    top:10px; right:10px;
+    z-index:5;
+    width: 30px; height:30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(11,11,12,0.55);
+    backdrop-filter: blur(2px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition: all .2s;
+  }
+  .like-btn svg{ width:16px; height:16px; stroke: var(--cream); fill: none; transition: all .2s; }
+  .like-btn:hover{ background: rgba(11,11,12,0.8); }
+  .like-btn.liked svg{ fill: var(--red-bright); stroke: var(--red-bright); }
+  .editing .like-btn{ display:none; }
+
+  /* ---------- CART DRAWER ---------- */
+  .cart-backdrop{
+    position:fixed; inset:0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    z-index: 200;
+    display:none;
+  }
+  .cart-backdrop.open{ display:block; }
+  .cart-drawer{
+    position:fixed;
+    top:0; right:0;
+    height:100%;
+    width: min(400px, 90vw);
+    background: linear-gradient(180deg, #1c1715, #100d0c);
+    border-left: 1px solid var(--gold-dim);
+    z-index: 201;
+    display:flex;
+    flex-direction:column;
+    transform: translateX(100%);
+    transition: transform .35s ease;
+  }
+  .cart-backdrop.open .cart-drawer{ transform: translateX(0); }
+  .cart-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 24px 26px;
+    border-bottom: 1px solid rgba(232,185,48,0.15);
+  }
+  .cart-header h3{ font-size: 1.5rem; color: var(--cream); }
+  .cart-close{
+    background:none; border:none; color: var(--cream-dim);
+    font-size: 1.3rem; cursor:pointer; line-height:1;
+  }
+  .cart-close:hover{ color: var(--gold); }
+  .cart-items{ flex:1; overflow-y:auto; padding: 10px 26px; }
+  .cart-empty{ text-align:center; color: var(--cream-dim); font-size:0.85rem; margin-top: 60px; }
+  .cart-item{
+    display:flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(241,233,220,0.08);
+  }
+  .cart-item img{ width:64px; height:64px; object-fit:cover; border-radius:3px; }
+  .cart-item-info{ flex:1; }
+  .cart-item-name{ font-family:'Cormorant Garamond', serif; font-size:1.1rem; color:var(--cream); margin-bottom:4px; }
+  .cart-item-price{ font-size:0.8rem; color: var(--gold); margin-bottom: 8px; }
+  .qty-controls{ display:flex; align-items:center; gap:10px; }
+  .qty-controls button{
+    width:22px; height:22px;
+    border-radius:50%;
+    border:1px solid rgba(241,233,220,0.25);
+    background:transparent;
+    color:var(--cream);
+    cursor:pointer;
+    font-size:0.8rem;
+    line-height:1;
+  }
+  .qty-controls button:hover{ border-color: var(--gold); color: var(--gold); }
+  .qty-controls span{ font-size:0.8rem; min-width:16px; text-align:center; }
+  .cart-item-remove{
+    background:none; border:none; color: var(--red-bright);
+    font-size:0.68rem; letter-spacing:1px; text-transform:uppercase;
+    cursor:pointer; margin-left:auto;
+  }
+  .cart-footer{
+    padding: 20px 26px 26px;
+    border-top: 1px solid rgba(232,185,48,0.15);
+  }
+  .cart-total{
+    display:flex; justify-content:space-between;
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+  .cart-total span:last-child{ color: var(--gold); font-weight:500; }
+  .checkout-btn{
+    width:100%;
+    padding: 14px;
+    background: var(--gold);
+    color: var(--black);
+    border:none;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight:600;
+    cursor:pointer;
+    transition: all .25s;
+  }
+  .checkout-btn:hover{ box-shadow: 0 0 20px rgba(232,185,48,0.4); }
+
+  .add-card{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    min-height: 260px;
+    border: 1px dashed rgba(232,185,48,0.35);
+    border-radius: 4px;
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: all .25s;
+  }
+  .add-card:hover{ background: rgba(232,185,48,0.06); }
+  body.admin-on .add-card{ display:flex; }
+
+  /* ---------- ABOUT STRIP ---------- */
+  .about{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items:center;
+  }
+  .about .eyebrow{ margin-bottom:18px; }
+  .about h2{ font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 22px; }
+  .about p{ color: var(--cream-dim); line-height: 1.9; font-size: 0.95rem; }
+  .about-visual{
+    aspect-ratio: 4/5;
+    border-radius: 4px;
+    background: linear-gradient(160deg, var(--red) 0%, #4a0d0d 40%, var(--black) 75%);
+    position:relative;
+    overflow:hidden;
+    border: 1px solid rgba(232,185,48,0.2);
+  }
+  .about-visual::after{
+    content:"JUNE";
+    position:absolute;
+    bottom: 24px; left:24px;
+    font-family:'Cormorant Garamond', serif;
+    font-size: 2rem;
+    letter-spacing: 6px;
+    color: rgba(241,233,220,0.85);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 60px 6% 40px;
+    border-top: 1px solid rgba(232,185,48,0.12);
+    text-align:center;
+  }
+  footer .logo-mark{ display:block; margin-bottom: 14px; }
+  footer p{ font-size: 0.75rem; color: var(--cream-dim); letter-spacing: 1px; }
+  footer .foot-links{
+    margin-top: 18px;
+    display:flex;
+    justify-content:center;
+    gap: 26px;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+  footer .foot-links a:hover{ color: var(--gold); }
+
+  /* ---------- MODAL (admin login) ---------- */
+  .modal-backdrop{
+    position:fixed; inset:0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+  }
+  .modal-backdrop.open{ display:flex; }
+  .modal{
+    width: min(360px, 88vw);
+    background: linear-gradient(180deg, #1c1715, #100d0c);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 34px 30px;
+    text-align:center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  }
+  .modal .lock-icon{
+    width: 42px; height:42px;
+    margin: 0 auto 18px;
+    color: var(--gold);
+  }
+  .modal h3{ font-size: 1.6rem; color: var(--cream); margin-bottom: 6px; }
+  .modal p.sub{ font-size: 0.72rem; color: var(--cream-dim); letter-spacing: 1px; margin-bottom: 22px; text-transform:uppercase; }
+  .modal input{
+    width:100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(241,233,220,0.2);
+    color: var(--cream);
+    padding: 12px 14px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-align:center;
+    margin-bottom: 14px;
+  }
+  .modal input:focus{ outline:none; border-color: var(--gold); }
+  .modal-error{
+    font-size: 0.7rem;
+    color: var(--red-bright);
+    letter-spacing: 1px;
+    min-height: 16px;
+    margin-bottom: 10px;
+  }
+  .modal-actions{ display:flex; gap:10px; }
+  .modal-actions button{
+    flex:1;
+    padding: 12px;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    cursor:pointer;
+    border: 1px solid transparent;
+    transition: all .25s;
+  }
+  .btn-primary{ background: var(--gold); color: var(--black); font-weight:600; }
+  .btn-primary:hover{ box-shadow: 0 0 20px rgba(232,185,48,0.4); }
+  .btn-ghost{ background:transparent; border-color: rgba(241,233,220,0.25); color: var(--cream-dim); }
+  .btn-ghost:hover{ border-color: var(--cream-dim); color: var(--cream); }
+
+  .save-fab{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 150;
+    display: none;
+    align-items:center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color: var(--black);
+    font-family:'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 15px 26px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,185,48,0.4);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .save-fab:hover{ transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,0.55), 0 0 24px rgba(232,185,48,0.4); }
+  .save-fab:active{ transform: translateY(0); }
+  .save-fab svg{ width:16px; height:16px; }
+  body.admin-on .save-fab{ display:flex; }
+
+  .toast{
+    position: fixed;
+    bottom: 26px; left:50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--charcoal);
+    border: 1px solid var(--gold-dim);
+    color: var(--cream);
+    padding: 12px 22px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    z-index: 300;
+    opacity:0;
+    pointer-events:none;
+    transition: all .35s;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); pointer-events:auto; }
+
+  @media (max-width: 720px){
+    .about{ grid-template-columns: 1fr; }
+    .nav-links{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-mark">
+    <svg class="logo-emblem" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="emblemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fbe9c2"/>
+          <stop offset="50%" stop-color="#e8b930"/>
+          <stop offset="100%" stop-color="#9e1b1b"/>
+        </linearGradient>
+      </defs>
+      <circle cx="13" cy="13" r="12" fill="none" stroke="url(#emblemGrad)" stroke-width="1.4"/>
+      <text x="13" y="17.5" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="13" font-weight="700" fill="url(#emblemGrad)">J</text>
+    </svg>
+    <span class="logo-text">JUNE</span>
+  </div>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="cart-btn" id="cartBtn" title="View bag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 4.5 2H2"/><circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+      <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+    <button class="admin-btn" id="adminBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <span id="adminBtnLabel">Admin</span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <svg class="texture-svg" xmlns="http://www.w3.org/2000/svg">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.91  0 0 0 0 0.72  0 0 0 0 0.19  0 0 0 0.25 0"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain)"></rect>
+  </svg>
+  <div class="hero-content">
+    <div class="eyebrow">Cosmetics — Est. Colour &amp; Craft</div>
+    <h1>JUNE</h1>
+    <p class="tag">Bold pigment. Bare skin. No apologies.</p>
+    <a href="#shop" class="hero-cta">Shop the Collection</a>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<section class="section" id="shop">
+  <div class="section-head">
+    <div class="eyebrow">The Edit</div>
+    <h2>Best Sellers</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<section class="section" id="about">
+  <div class="about">
+    <div class="about-visual"></div>
+    <div>
+      <div class="eyebrow">Our Story</div>
+      <h2>Made for the ones who don't blend in.</h2>
+      <p>JUNE was built on one idea — colour should feel like a decision, not a default. Every formula is developed for pigment payoff in a single swipe, tested on real skin in real light. Black bottle, red wax, gold foil: it's a uniform, and it's non-negotiable.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="logo-mark">
+    <svg class="logo-emblem" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="13" cy="13" r="12" fill="none" stroke="url(#emblemGrad)" stroke-width="1.4"/>
+      <text x="13" y="17.5" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="13" font-weight="700" fill="url(#emblemGrad)">J</text>
+    </svg>
+    <span class="logo-text">JUNE</span>
+  </div>
+  <p>Cosmetics designed in black, sealed in red, finished in gold.</p>
+  <div class="foot-links">
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="mailto:hello@junecosmetics.com">Contact</a>
+  </div>
+</footer>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="11" width="16" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    <h3>Admin Access</h3>
+    <p class="sub">Enter password to edit products</p>
+    <input type="password" id="passInput" placeholder="Password" autocomplete="off">
+    <div class="modal-error" id="modalError"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="modalCancel">Cancel</button>
+      <button class="btn-primary" id="modalSubmit">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<button class="save-fab" id="saveFab">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+  Save Changes
+</button>
+
+<!-- CART DRAWER -->
+<div class="cart-backdrop" id="cartBackdrop">
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Bag</h3>
+      <button class="cart-close" id="cartCloseBtn">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotalValue">₹0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =======================================================
+   ADMIN PASSWORD — change this to whatever you want
+   ======================================================= */
+const ADMIN_PASSWORD = "june2026";
+
+/* =======================================================
+   DEFAULT PRODUCTS — edited data is saved in the browser's
+   localStorage, so it persists next time you open this file
+   on the same device/browser.
+   ======================================================= */
+const DEFAULT_PRODUCTS = [
+  { id: 1, name: "Blackout Velvet Lipstick", desc: "Matte, blood-red, all-day", price: "₹1,299", img: "https://placehold.co/600x600/1a1614/e8b930?text=JUNE" },
+  { id: 2, name: "Foil Gold Highlighter", desc: "Liquid gold, cheekbone-ready", price: "₹1,499", img: "https://placehold.co/600x600/191513/e8b930?text=JUNE" },
+  { id: 3, name: "Midnight Kohl Eyeliner", desc: "Smudge-proof, jet black", price: "₹899", img: "https://placehold.co/600x600/0b0b0c/9e1b1b?text=JUNE" },
+  { id: 4, name: "Ember Blush Duo", desc: "Red + gold, buildable flush", price: "₹1,099", img: "https://placehold.co/600x600/191513/c8352f?text=JUNE" },
+  { id: 5, name: "Second Skin Foundation", desc: "Full coverage, weightless", price: "₹1,799", img: "https://placehold.co/600x600/1a1614/f1e9dc?text=JUNE" },
+  { id: 6, name: "Wax Seal Mascara", desc: "Volume that doesn't budge", price: "₹949", img: "https://placehold.co/600x600/0b0b0c/e8b930?text=JUNE" }
+];
+
+let products = [];
+let isAdmin = false;
+let cart = {};      // { productId: quantity }
+let likes = new Set(); // Set of liked productIds
+
+function loadProducts(){
+  const saved = localStorage.getItem("june_products");
+  products = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+}
+function saveProducts(){
+  localStorage.setItem("june_products", JSON.stringify(products));
+}
+function loadCart(){
+  const saved = localStorage.getItem("june_cart");
+  cart = saved ? JSON.parse(saved) : {};
+}
+function saveCart(){
+  localStorage.setItem("june_cart", JSON.stringify(cart));
+}
+function loadLikes(){
+  const saved = localStorage.getItem("june_likes");
+  likes = new Set(saved ? JSON.parse(saved) : []);
+}
+function saveLikes(){
+  localStorage.setItem("june_likes", JSON.stringify([...likes]));
+}
+function parsePrice(str){
+  const num = parseFloat(String(str).replace(/[^0-9.]/g, ""));
+  return isNaN(num) ? 0 : num;
+}
+function cartCount(){
+  return Object.values(cart).reduce((a,b) => a+b, 0);
+}
+function updateCartBadge(){
+  const badge = document.getElementById("cartBadge");
+  const count = cartCount();
+  badge.textContent = count;
+  badge.style.display = count > 0 ? "flex" : "none";
+}
+
+function renderProducts(){
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = "";
+  products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card" + (isAdmin ? " editing" : "");
+    card.dataset.id = p.id;
+    card.innerHTML = `
+      <div class="card-photo">
+        <img src="${p.img}" alt="${p.name}">
+        <button class="like-btn ${likes.has(p.id) ? 'liked' : ''}" title="Save to favourites">
+          <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2.2 0 3.8 1.2 6 3.5C14.2 5.2 15.8 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
+        </button>
+        <div class="img-edit-overlay">
+          <label>Image URL</label>
+          <input type="text" class="img-input" value="${p.img}">
+        </div>
+        <button class="remove-card-btn" title="Remove product">&times;</button>
+        <div class="edit-tag">Editing</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name" contenteditable="${isAdmin}" spellcheck="false">${p.name}</div>
+        <div class="card-desc" contenteditable="${isAdmin}" spellcheck="false">${p.desc}</div>
+        <div class="card-footer">
+          <div class="card-price" contenteditable="${isAdmin}" spellcheck="false">${p.price}</div>
+          <button class="add-btn">Add to Bag</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    const nameEl = card.querySelector(".card-name");
+    const descEl = card.querySelector(".card-desc");
+    const priceEl = card.querySelector(".card-price");
+    const imgInput = card.querySelector(".img-input");
+    const imgEl = card.querySelector("img");
+    const removeBtn = card.querySelector(".remove-card-btn");
+    const likeBtn = card.querySelector(".like-btn");
+    const addBtn = card.querySelector(".add-btn");
+
+    likeBtn.addEventListener("click", () => {
+      if(likes.has(p.id)){
+        likes.delete(p.id);
+        likeBtn.classList.remove("liked");
+        showToast("Removed from favourites");
+      } else {
+        likes.add(p.id);
+        likeBtn.classList.add("liked");
+        showToast("Saved to favourites ♥");
+      }
+      saveLikes();
+    });
+
+    addBtn.addEventListener("click", () => {
+      cart[p.id] = (cart[p.id] || 0) + 1;
+      saveCart();
+      updateCartBadge();
+      showToast(`${p.name} added to bag`);
+    });
+
+    if(isAdmin){
+      nameEl.addEventListener("blur", () => { p.name = nameEl.textContent.trim(); saveProducts(); });
+      descEl.addEventListener("blur", () => { p.desc = descEl.textContent.trim(); saveProducts(); });
+      priceEl.addEventListener("blur", () => { p.price = priceEl.textContent.trim(); saveProducts(); });
+      imgInput.addEventListener("change", () => {
+        p.img = imgInput.value.trim();
+        imgEl.src = p.img;
+        saveProducts();
+        showToast("Image updated");
+      });
+      removeBtn.addEventListener("click", () => {
+        products = products.filter(x => x.id !== p.id);
+        saveProducts();
+        renderProducts();
+        showToast("Product removed");
+      });
+    }
+  });
+
+  // "Add product" card, admin only
+  const addCard = document.createElement("div");
+  addCard.className = "add-card";
+  addCard.textContent = "+ Add Product";
+  addCard.addEventListener("click", () => {
+    const newId = Date.now();
+    products.push({
+      id: newId,
+      name: "New Product",
+      desc: "Short description",
+      price: "₹0",
+      img: "https://placehold.co/600x600/191513/e8b930?text=JUNE"
+    });
+    saveProducts();
+    renderProducts();
+    showToast("Product added — edit its details");
+  });
+  grid.appendChild(addCard);
+}
+
+function showToast(msg){
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+/* ---------- admin lock / unlock ---------- */
+const adminBtn = document.getElementById("adminBtn");
+const adminBtnLabel = document.getElementById("adminBtnLabel");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const passInput = document.getElementById("passInput");
+const modalError = document.getElementById("modalError");
+
+adminBtn.addEventListener("click", () => {
+  if(isAdmin){
+    // lock again
+    isAdmin = false;
+    document.body.classList.remove("admin-on");
+    adminBtn.classList.remove("unlocked");
+    adminBtnLabel.textContent = "Admin";
+    renderProducts();
+    showToast("Locked — changes saved");
+  } else {
+    modalBackdrop.classList.add("open");
+    passInput.value = "";
+    modalError.textContent = "";
+    setTimeout(() => passInput.focus(), 50);
+  }
+});
+
+document.getElementById("modalCancel").addEventListener("click", () => {
+  modalBackdrop.classList.remove("open");
+});
+
+document.getElementById("modalSubmit").addEventListener("click", tryUnlock);
+passInput.addEventListener("keydown", (e) => { if(e.key === "Enter") tryUnlock(); });
+
+function tryUnlock(){
+  if(passInput.value === ADMIN_PASSWORD){
+    isAdmin = true;
+    document.body.classList.add("admin-on");
+    adminBtn.classList.add("unlocked");
+    adminBtnLabel.textContent = "Editing";
+    modalBackdrop.classList.remove("open");
+    renderProducts();
+    showToast("Unlocked — click any name, price or image to edit");
+  } else {
+    modalError.textContent = "Incorrect password";
+  }
+}
+
+/* ---------- explicit save button ---------- */
+function collectAndSaveAll(){
+  const cards = document.querySelectorAll("#productGrid .card");
+  cards.forEach(card => {
+    const id = Number(card.dataset.id);
+    const p = products.find(x => x.id === id);
+    if(!p) return;
+    const nameEl = card.querySelector(".card-name");
+    const descEl = card.querySelector(".card-desc");
+    const priceEl = card.querySelector(".card-price");
+    const imgInput = card.querySelector(".img-input");
+    if(nameEl) p.name = nameEl.textContent.trim();
+    if(descEl) p.desc = descEl.textContent.trim();
+    if(priceEl) p.price = priceEl.textContent.trim();
+    if(imgInput && imgInput.value.trim()) p.img = imgInput.value.trim();
+  });
+  saveProducts();
+  showToast("Saved permanently ✓");
+}
+
+document.getElementById("saveFab").addEventListener("click", collectAndSaveAll);
+
+/* ---------- cart drawer ---------- */
+const cartBtn = document.getElementById("cartBtn");
+const cartBackdrop = document.getElementById("cartBackdrop");
+
+cartBtn.addEventListener("click", () => {
+  renderCartDrawer();
+  cartBackdrop.classList.add("open");
+});
+document.getElementById("cartCloseBtn").addEventListener("click", () => {
+  cartBackdrop.classList.remove("open");
+});
+cartBackdrop.addEventListener("click", (e) => {
+  if(e.target === cartBackdrop) cartBackdrop.classList.remove("open");
+});
+
+function renderCartDrawer(){
+  const itemsWrap = document.getElementById("cartItems");
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+
+  if(ids.length === 0){
+    itemsWrap.innerHTML = `<div class="cart-empty">Your bag is empty</div>`;
+    document.getElementById("cartTotalValue").textContent = "₹0";
+    return;
+  }
+
+  itemsWrap.innerHTML = "";
+  let total = 0;
+  ids.forEach(id => {
+    const p = products.find(x => x.id === Number(id));
+    if(!p) return;
+    const qty = cart[id];
+    total += parsePrice(p.price) * qty;
+
+    const row = document.createElement("div");
+    row.className = "cart-item";
+    row.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-price">${p.price}</div>
+        <div class="qty-controls">
+          <button class="qty-minus">-</button>
+          <span>${qty}</span>
+          <button class="qty-plus">+</button>
+          <button class="cart-item-remove">Remove</button>
+        </div>
+      </div>
+    `;
+    row.querySelector(".qty-plus").addEventListener("click", () => {
+      cart[id] += 1; saveCart(); updateCartBadge(); renderCartDrawer();
+    });
+    row.querySelector(".qty-minus").addEventListener("click", () => {
+      cart[id] -= 1;
+      if(cart[id] <= 0) delete cart[id];
+      saveCart(); updateCartBadge(); renderCartDrawer();
+    });
+    row.querySelector(".cart-item-remove").addEventListener("click", () => {
+      delete cart[id]; saveCart(); updateCartBadge(); renderCartDrawer();
+    });
+    itemsWrap.appendChild(row);
+  });
+
+  document.getElementById("cartTotalValue").textContent = "₹" + total.toLocaleString("en-IN");
+}
+
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  if(cartCount() === 0){ showToast("Your bag is empty"); return; }
+  showToast("Checkout isn't connected yet — hook this up to your payment provider");
+});
+
+/* init */
+loadProducts();
+loadCart();
+loadLikes();
+renderProducts();
+updateCartBadge();
+</script>
+</body>
+</html>
